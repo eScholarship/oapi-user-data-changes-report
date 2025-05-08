@@ -9,7 +9,7 @@ def main():
     creds = dotenv_values()
     today_string = datetime.today().strftime('%Y-%m-%d')
 
-    with open('pdg_change_report.sql') as f:
+    with open('pgd_change_report.sql') as f:
         pgd_change_query = f.read().replace('#REPLACE', today_string)
 
     pdg_change_report = query_reporting_db(creds, pgd_change_query)
@@ -44,7 +44,7 @@ def query_reporting_db(creds, query):
         pwd=creds['ELEMENTS_REPORTING_DB_PASSWORD'],
         trustservercertificate='yes')
 
-    print(f"Connected to Elements reporting DB, querying: {input_file}")
+    print(f"Connected to Elements reporting DB, querying.")
     conn.autocommit = True  # Required when queries use TRANSACTION
     cursor = conn.cursor()
     cursor.execute(query)
