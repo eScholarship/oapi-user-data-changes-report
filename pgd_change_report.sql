@@ -16,10 +16,7 @@ from
 		left join [user search term defaults] ustd
 			on udc.user_id = ustd.[User ID]
 where
-	udc.updated_when >= DATEADD(month, -1,
-	    -- #REPLACE
-	    '2025-06-01'
-	)
+	udc.updated_when >= DATEADD(month, -1, GETDATE())
 	-- Don't need new users
 	and not (
 		udc.ucpath_id_old is null
@@ -28,9 +25,7 @@ where
 		and udc.username_old is null
 	)
 	-- only want to see pgd changes
-	and (
-		udc.pgd_old != udc.pgd_new
-	)
+	and udc.pgd_old != udc.pgd_new
 order by
 	udc.updated_when desc,
 	udc.pgd_new,
