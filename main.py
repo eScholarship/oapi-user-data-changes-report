@@ -22,10 +22,6 @@ def main():
         "folder": "pub-oapi-tools/emails",
         "names": ['devin', 'alainna']}}
     param_return = aws_lambda.get_parameters(param_req)
-
-    print(param_return)
-    exit()
-
     emails = param_return['emails'].values()
 
     # Set up the mail process with attachment and email recipients
@@ -50,7 +46,7 @@ def main():
 
 
 def query_reporting_db(query):
-    conn = ucpms_db.get_connection(env="prod", autocommit=True)
+    conn = ucpms_db.get_connection(env="prod")
     cursor = conn.cursor()
     cursor.execute(query)
     rows = ucpms_db.get_dict_list(cursor)
@@ -72,7 +68,6 @@ def write_csv_file(data, filename, today_string):
         writer = csv.DictWriter(outfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(data)
-
     return filename_with_date
 
 
