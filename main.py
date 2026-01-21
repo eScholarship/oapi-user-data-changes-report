@@ -19,7 +19,7 @@ def main():
 
     # Get email addresses DB creds
     param_req = {"emails": {
-        "folder": "/pub-oapi-tools/emails",
+        "folder": "pub-oapi-tools/emails",
         "names": ['devin', 'alainna']}}
     param_return = aws_lambda.get_parameters(param_req)
 
@@ -30,7 +30,7 @@ def main():
 
     # Set up the mail process with attachment and email recipients
     subprocess_setup = ['mail',
-                        '-s', 'TEST: PGD changes report',
+                        '-s', 'PGD changes report',
                         '-a', pdg_change_report_file]
     subprocess_setup += emails
 
