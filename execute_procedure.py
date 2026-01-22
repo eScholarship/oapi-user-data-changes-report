@@ -1,15 +1,8 @@
 from pub_oapi_tools_common import ucpms_db
 
+conn = ucpms_db.get_connection(env="prod")
 
-def main():
-    conn = ucpms_db.get_connection(env="prod")
-    cursor = conn.cursor()
+with conn.cursor() as cursor:
     cursor.execute("EXEC UCOPreports.update_user_data_changes;")
-    conn.commit()
-    cursor.close()
-    conn.close()
 
-
-# Stub for main
-if __name__ == '__main__':
-    main()
+conn.close()

@@ -47,9 +47,9 @@ def main():
 
 def query_reporting_db(query):
     conn = ucpms_db.get_connection(env="prod")
-    cursor = conn.cursor()
-    cursor.execute(query)
-    rows = ucpms_db.get_dict_list(cursor)
+    with conn.cursor() as cursor:
+        cursor.execute(query)
+        rows = ucpms_db.get_dict_list(cursor)
     conn.close()
     return rows
 
