@@ -17,11 +17,11 @@ def main():
     pdg_change_report = query_reporting_db(pgd_change_query)
     pdg_change_report_file = write_csv_file(pdg_change_report, "pdg_change_report", today_string)
 
-    # Get email addresses DB creds
+    # Get email addresses
     param_req = {"emails": {
         "folder": "pub-oapi-tools/emails",
         "names": ['devin', 'alainna']}}
-    param_return = aws_lambda.get_parameters(param_req)
+    param_return = aws_lambda.get_parameters(param_req=param_req)
     emails = param_return['emails'].values()
 
     # Set up the mail process with attachment and email recipients
@@ -32,11 +32,9 @@ def main():
 
     # Text in the email body
     input_byte_string = b'''
-        The attached CSV includes users' primary group changes in the span of one month.
+The attached CSV includes users' primary group changes in the span of one month.
         
-        Future-Proofing: This automated email was sent from the following program:
-        https://github.com/eScholarship/oapi-user-data-changes-report/ 
-    '''
+Future-Proofing: This automated email was sent from the following program:https://github.com/eScholarship/oapi-user-data-changes-report/ '''
 
     # Run the subprocess with EOT input to send
     subprocess.run(
